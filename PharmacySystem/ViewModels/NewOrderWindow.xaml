@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window x:Class="PharmacySystem.ViewModels.NewOrderWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Оформление нового заказа" Height="700" Width="1000"
+        WindowStartupLocation="CenterScreen" Background="#F4F7F9">
+
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </Window.Resources>
+
+    <Grid Margin="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="350"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0" Margin="0,0,15,0">
+            <GroupBox Header="Пациент" Margin="0,0,0,10" Padding="10">
+                <StackPanel>
+                    <TextBlock Text="ФИО пациента:" FontWeight="SemiBold"/>
+                    <TextBox x:Name="TxtPatientName" Margin="0,2,0,10"/>
+                    <UniformGrid Columns="2">
+                        <StackPanel Margin="0,0,5,0">
+                            <TextBlock Text="Возраст:" FontWeight="SemiBold"/>
+                            <TextBox x:Name="TxtAge" Margin="0,2,0,10"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock Text="Телефон:" FontWeight="SemiBold"/>
+                            <TextBox x:Name="TxtPhone" Margin="0,2,0,10"/>
+                        </StackPanel>
+                    </UniformGrid>
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox Header="Адрес доставки/проживания" Margin="0,0,0,10" Padding="10">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="80"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Город:" Grid.Row="0"/>
+                    <TextBox x:Name="TxtCity" Grid.Row="1" Grid.ColumnSpan="2" Margin="0,2,0,8"/>
+                    <TextBlock Text="Улица:" Grid.Row="2"/>
+                    <TextBox x:Name="TxtStreet" Grid.Row="3" Margin="0,2,5,0"/>
+                    <TextBlock Text="Дом/Кв:" Grid.Row="2" Grid.Column="1"/>
+                    <TextBox x:Name="TxtHouseApt" Grid.Row="3" Grid.Column="1" Margin="0,2,0,0"/>
+                </Grid>
+            </GroupBox>
+
+            <GroupBox Header="Медицинские данные" Padding="10">
+                <StackPanel>
+                    <TextBlock Text="ФИО врача:"/>
+                    <TextBox x:Name="TxtDoctor" Margin="0,2,0,8"/>
+                    <TextBlock Text="Диагноз:"/>
+                    <TextBox x:Name="TxtDiagnosis" AcceptsReturn="True" Height="60" TextWrapping="Wrap"/>
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
+
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <GroupBox Header="Характеристики изготавливаемого ЛС" Margin="0,0,0,10" Padding="10">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Margin="0,0,10,0">
+                        <TextBlock Text="Название препарата:" FontWeight="Bold"/>
+                        <TextBox x:Name="TxtMedName" Margin="0,2,0,0"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Margin="0,0,10,0">
+                        <TextBlock Text="Форма выпуска (Рецепт):" FontWeight="Bold"/>
+                        <ComboBox x:Name="CmbFormType" Margin="0,2,0,0"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="Кол-во (уп):" FontWeight="Bold"/>
+                        <TextBox x:Name="TxtTotalQty" Text="1" Margin="0,2,0,0"/>
+                    </StackPanel>
+                </Grid>
+            </GroupBox>
+
+            <GroupBox Header="Состав рецепта (Ингредиенты)" Grid.Row="1" Padding="10">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Margin="0,0,0,10">
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                            <RadioButton x:Name="RbSelectExisting" Content="Выбрать из наличия" IsChecked="True" Margin="0,0,20,0"/>
+                            <RadioButton x:Name="RbAddNew" Content="Добавить вручную (нет на складе)"/>
+                        </StackPanel>
+
+                        <Grid>
+                            <StackPanel Visibility="{Binding IsChecked, ElementName=RbSelectExisting, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <TextBlock Text="Выберите компонент из базы склада:" Margin="0,0,0,2" FontSize="11" Foreground="#555"/>
+                                <ComboBox x:Name="CmbComponents" Width="300" HorizontalAlignment="Left" DisplayMemberPath="InnName"/>
+                            </StackPanel>
+
+                            <StackPanel Visibility="{Binding IsChecked, ElementName=RbAddNew, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <UniformGrid Columns="3">
+                                    <StackPanel Margin="0,0,5,0">
+                                        <TextBlock Text="Название компонента:" FontSize="11" Foreground="#555"/>
+                                        <TextBox x:Name="TxtNewCompName" ToolTip="Введите полное наименование"/>
+                                    </StackPanel>
+                                    <StackPanel Margin="0,0,5,0">
+                                        <TextBlock Text="Цена за ед. (руб):" FontSize="11" Foreground="#555"/>
+                                        <TextBox x:Name="TxtNewCompPrice" ToolTip="Пример: 150.50"/>
+                                    </StackPanel>
+                                    <StackPanel>
+                                        <TextBlock Text="Тип (форма):" FontSize="11" Foreground="#555"/>
+                                        <ComboBox x:Name="CmbNewCompFormType"/>
+                                    </StackPanel>
+                                </UniformGrid>
+                            </StackPanel>
+                        </Grid>
+
+                        <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
+                            <StackPanel>
+                                <TextBlock Text="Дозировка на 1 упаковку:" FontSize="11" Foreground="#555" Margin="0,0,0,2"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBox x:Name="TxtIngrQty" Width="80"/>
+                                    <TextBlock Text="ед." VerticalAlignment="Center" Margin="5,0,0,0" Foreground="#888"/>
+                                </StackPanel>
+                            </StackPanel>
+                            <Button Content="Добавить в состав" Click="BtnAddIngredient_Click" 
+                                    Margin="20,0,0,0" Padding="15,5" VerticalAlignment="Bottom"
+                                    Background="#3498DB" Foreground="White" FontWeight="Bold"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <DataGrid x:Name="GridIngredients" Grid.Row="1" AutoGenerateColumns="False" 
+                              CanUserAddRows="False" Background="White" BorderBrush="#DDD">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Наименование" Binding="{Binding Name}" Width="2*"/>
+                            <DataGridTextColumn Header="Тип формы" Binding="{Binding Type}" Width="*"/>
+                            <DataGridTextColumn Header="Дозировка" Binding="{Binding QtyPerOne}" Width="100"/>
+                            <DataGridTextColumn Header="Цена за ед." Binding="{Binding Price, StringFormat={}{0:N2} руб.}" Width="100"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </GroupBox>
+
+            <Button x:Name="BtnSave" Content="ЗАРЕГИСТРИРОВАТЬ ЗАКАЗ" Grid.Row="2" Height="50" 
+                    Margin="0,15,0,0" Background="#27AE60" Foreground="White" 
+                    FontSize="14" FontWeight="Bold" Click="BtnSave_Click"/>
+        </Grid>
+    </Grid>
+</Window>

@@ -1,0 +1,92 @@
+﻿<Window x:Class="PharmacySystem.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Pharmacy Management System Pro" Height="650" Width="1100"
+        WindowStartupLocation="CenterScreen" Background="#F0F2F5">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="448*"/>
+            <RowDefinition Height="187*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="260"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="0" Background="#2C3E50" Padding="20" Grid.RowSpan="2">
+            <StackPanel>
+                <Ellipse Width="80" Height="80" Fill="#1ABC9C" Margin="0,0,0,15"/>
+                <TextBlock Text="PHARMACY OS" Foreground="White" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,40"/>
+
+                <Button x:Name="BtnCreateOrder" Content="ОФОРМИТЬ РЕЦЕПТ" Click="BtnCreateOrder_Click"
+                        Height="50" Background="#27AE60" Foreground="White" FontWeight="Bold" Margin="0,5">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="5"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+
+                <Button x:Name="BtnOpenAnalytics" Content="МОДУЛЬ АНАЛИТИКИ" Click="BtnOpenAnalytics_Click"
+                        Height="50" Background="#3498DB" Foreground="White" FontWeight="Bold" Margin="0,5">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="5"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+
+                <Separator Margin="0,30" Background="#5D6D7E"/>
+
+                <TextBlock Text="БЫСТРЫЕ ДЕЙСТВИЯ" Foreground="#7F8C8D" FontSize="10" FontWeight="Bold" Margin="0,0,0,10"/>
+                <Button Content="Склад (Инвентарь)" Click="BtnWarehouse_Click" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" 
+                        Foreground="White" HorizontalAlignment="Left"/>
+            </StackPanel>
+        </Border>
+
+        <Grid Grid.Column="1" Margin="25,25,25,25" Grid.RowSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Margin="0,0,0,20">
+                <TextBlock Text="Панель мониторинга" FontSize="24" FontWeight="Light" Foreground="#34495E"/>
+                <TextBlock Text="Обзор последних операций в системе" Foreground="#7F8C8D"/>
+            </StackPanel>
+
+            <Border Grid.Row="1" Background="White" CornerRadius="8" Padding="15">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.05"/>
+                </Border.Effect>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="291*"/>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="465*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="ЖУРНАЛ ВЫДАЧИ (ПОСЛЕДНИЕ)" FontWeight="Bold" Margin="0,0,0,10" FontSize="11" Grid.ColumnSpan="3"/>
+
+                    <DataGrid x:Name="MainLogGrid" Grid.Row="1" AutoGenerateColumns="False" 
+                              IsReadOnly="True" Background="Transparent" BorderThickness="0"
+                              GridLinesVisibility="None" RowHeight="40" Grid.ColumnSpan="3">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Дата выдачи" Binding="{Binding IssueDate, StringFormat=\{0:dd.MM.yyyy HH:mm\}}" Width="140"/>
+                            <DataGridTextColumn Header="Пациент" Binding="{Binding PatientFullName}" Width="*"/>
+                            <DataGridTextColumn Header="Препарат" Binding="{Binding MedicationName}" Width="*"/>
+                            <DataGridTextColumn Header="Сумма (₽)" Binding="{Binding FinalPrice, StringFormat=\{0:N2\}}" Width="100"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </Border>
+
+
+        </Grid>
+    </Grid>
+</Window>

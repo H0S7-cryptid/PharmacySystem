@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window x:Class="PharmacySystem.ViewModels.InventoryWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Инвентаризация склада и пополнение" Height="650" Width="1100"
+        WindowStartupLocation="CenterScreen" Background="#F0F2F5">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Background="White" CornerRadius="8" Padding="15" Margin="0,0,0,20">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                <StackPanel Width="600">
+                    <TextBlock Text="Управление запасами" FontSize="22" FontWeight="Bold" Foreground="#1A73E8"/>
+                    <TextBlock Text="Контроль уровня остатков и экстренное пополнение критически важных компонентов." 
+                               Foreground="Gray" FontSize="13"/>
+                </StackPanel>
+                <Button Content="Пополнить весь дефицит" Click="RestockAll_Click" 
+                        Background="#FBBC04" Foreground="Black" FontWeight="Bold" 
+                        Padding="15,5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            </StackPanel>
+        </Border>
+
+        <DataGrid x:Name="InventoryDataGrid" Grid.Row="1" 
+                  AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True"
+                  Background="White" BorderThickness="1" BorderBrush="#DCDCDC" RowHeight="40">
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Компонент (МНН)" Binding="{Binding InnName}" Width="2*"/>
+                <DataGridTextColumn Header="Запас" Binding="{Binding CurrentStock}" Width="80"/>
+                <DataGridTextColumn Header="Ед. изм." Binding="{Binding MeasureUnit}" Width="80"/>
+                <DataGridTextColumn Header="Крит. норма" Binding="{Binding CriticalNorm}" Width="100"/>
+
+                <DataGridTemplateColumn Header="Статус" Width="120">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Border CornerRadius="4" Padding="4" Background="{Binding StatusColor}">
+                                <TextBlock Text="{Binding StatusText}" Foreground="White" 
+                                           FontSize="10" FontWeight="Bold" HorizontalAlignment="Center"/>
+                            </Border>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Действие" Width="130">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Пополнить +50" Click="RestockItem_Click" 
+                                    CommandParameter="{Binding}"
+                                    Background="#34A853" Foreground="White" FontSize="11" Padding="5,2"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTextColumn Header="Цена" Binding="{Binding PricePerUnit, StringFormat={}{0:N2}}" Width="100"/>
+
+                <DataGridTextColumn Header="Тип/Форма" Binding="{Binding FormType}" Width="100" />
+                
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Grid Grid.Row="2" Margin="0,20,0,0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                <TextBlock Text="Всего наименований: " VerticalAlignment="Center"/>
+                <TextBlock x:Name="TxtTotalCount" Text="0" FontWeight="Bold" Margin="5,0,20,0"/>
+                <TextBlock Text="Критических позиций: " VerticalAlignment="Center" Foreground="Red"/>
+                <TextBlock x:Name="TxtCriticalCount" Text="0" FontWeight="Bold" Foreground="Red" Margin="5,0,0,0"/>
+            </StackPanel>
+            <Button Content="Закрыть окно" Click="Close_Click" HorizontalAlignment="Right"
+                    Padding="30,8" Background="#1A73E8" Foreground="White" BorderThickness="0"/>
+        </Grid>
+    </Grid>
+</Window>
