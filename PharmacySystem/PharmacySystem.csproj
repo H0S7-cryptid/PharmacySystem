@@ -59,7 +59,6 @@
     <Compile Include="Models\CustomerModels\Customer.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\Recipe.cs" />
-    <Compile Include="ORMLogistics\BaseRepository.cs" />
     <Compile Include="ORMLogistics\Logs\IssuedListRepository.cs" />
     <Compile Include="ORMLogistics\Logs\WaitingListRepository.cs" />
     <Compile Include="ORMLogistics\TechnologyRepository.cs" />

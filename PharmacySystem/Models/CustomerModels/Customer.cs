@@ -11,7 +11,7 @@ namespace PharmacySystem.Models.CustomerModels
     public class Customer : BaseEntity
     {
         public string FullName { get; set; } = string.Empty;
-        public int Age { get; set; } // Важно для рецепта (ТЗ)
+        public int Age { get; set; }
         public string Phone { get; set; } = string.Empty;
         public Address Address { get; set; }
 
@@ -19,20 +19,5 @@ namespace PharmacySystem.Models.CustomerModels
         {
             Address = new Address();
         }
-        public XElement ToXElement() => new XElement("Customer",
-            GetIdAttribute(),
-            new XElement("FullName", FullName),
-            new XElement("Phone", Phone),
-            new XElement("Age", Age),
-            Address.ToXElement());
-
-        public static Customer FromXElement(XElement x) => new Customer
-        {
-            Id = Guid.Parse(x.Attribute("Id")?.Value ?? Guid.NewGuid().ToString()),
-            FullName = x.Element("FullName")?.Value ?? "",
-            Phone = x.Element("Phone")?.Value ?? "",
-            Age = int.Parse(x.Element("Age")?.Value ?? "0"),
-            Address = Address.FromXElement(x.Element("Address"))
-        };
     }
 }

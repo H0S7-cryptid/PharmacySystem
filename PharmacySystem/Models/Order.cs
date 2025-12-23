@@ -54,35 +54,6 @@ namespace PharmacySystem.Models
         /// Рассчитывается как (Стоимость ингредиентов * Qty) + LaborCost.
         /// </summary>
         public decimal TotalPrice { get; set; }
-
-        public XElement ToXElement() => new XElement("Order",
-            GetIdAttribute(),
-            new XElement("CustomerId", CustomerId),
-            new XElement("ProductId", MedicalProductId),
-            new XElement("Doctor", DoctorFullName),
-            new XElement("Diagnosis", Diagnosis),
-            new XElement("Quantity", Quantity),
-            new XElement("Status", Status),
-            new XElement("CreatedDate", CreatedDate),
-            new XElement("EstimatedDate", EstimatedReadyDate?.ToString() ?? ""),
-            new XElement("IssueDate", ActualIssueDate?.ToString() ?? ""),
-            new XElement("TotalPrice", TotalPrice)
-        );
-
-        public static Order FromXElement(XElement x) => new Order
-        {
-            Id = Guid.Parse(x.Attribute("Id")?.Value),
-            CustomerId = Guid.Parse(x.Element("CustomerId").Value),
-            MedicalProductId = Guid.Parse(x.Element("ProductId").Value),
-            DoctorFullName = x.Element("Doctor")?.Value,
-            Diagnosis = x.Element("Diagnosis")?.Value,
-            Quantity = int.Parse(x.Element("Quantity")?.Value ?? "1"),
-            Status = (OrderStatus)Enum.Parse(typeof(OrderStatus), x.Element("Status").Value),
-            CreatedDate = DateTime.Parse(x.Element("CreatedDate").Value),
-            EstimatedReadyDate = string.IsNullOrEmpty(x.Element("EstimatedDate")?.Value) ? (DateTime?)null : DateTime.Parse(x.Element("EstimatedDate").Value),
-            ActualIssueDate = string.IsNullOrEmpty(x.Element("IssueDate")?.Value) ? (DateTime?)null : DateTime.Parse(x.Element("IssueDate").Value),
-            TotalPrice = decimal.Parse(x.Element("TotalPrice")?.Value ?? "0")
-        };
     }
 
     public class ProductionOrderEntry : BaseEntity

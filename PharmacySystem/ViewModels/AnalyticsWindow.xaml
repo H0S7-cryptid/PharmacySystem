@@ -220,7 +220,7 @@
 
                                 <Separator Margin="0,15"/>
                                 <TextBlock Text="Применимые технологии:" FontWeight="Bold" Foreground="#7F8C8D" Margin="0,0,0,5"/>
-                                <ListBox x:Name="LstProfTechs" DisplayMemberPath="PreparationMethod" Height="150" BorderThickness="0" Background="#F4F7F9"/>
+                                <ListBox x:Name="LstProfTechs" DisplayMemberPath="PreparationMethod" Height="350" BorderThickness="0" Background="#F4F7F9"/>
                             </StackPanel>
                         </Border>
 

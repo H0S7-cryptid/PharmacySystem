@@ -49,7 +49,7 @@ namespace PharmacySystem.Models
     }
 
     /// <summary>
-    /// Тип лекарственной формы (из ТЗ).
+    /// Тип лекарственной формы.
     /// </summary>
     public enum TypeOfMeds
     {

@@ -46,24 +46,6 @@ namespace PharmacySystem.Models
         public DateTime ExpirationDate { get; set; }
 
         public TypeOfMeds FormType { get; set; } = TypeOfMeds.UNDEF;
-
-        /*public XElement ToXElement() => new XElement("Component",
-            GetIdAttribute(),
-            new XAttribute("InnName", InnName),
-            new XElement("CriticalNorm", CriticalNorm),
-            new XElement("CurrentStock", CurrentStock),
-            new XElement("PricePerUnit", PricePerUnit),
-            new XElement("Unit", MeasureUnit));
-
-        public static MedicalComponent FromXElement(XElement x) => new MedicalComponent
-        {
-            Id = Guid.Parse(x.Attribute("Id")?.Value ?? Guid.NewGuid().ToString()),
-            InnName = x.Attribute("InnName")?.Value ?? "",
-            CriticalNorm = int.Parse(x.Element("CriticalNorm")?.Value ?? "0"),
-            CurrentStock = int.Parse(x.Element("CurrentStock")?.Value ?? "0"),
-            PricePerUnit = decimal.Parse(x.Element("PricePerUnit")?.Value ?? "0"),
-            MeasureUnit = x.Element("Unit")?.Value ?? "mg"
-        };*/
     }
 
     /// <summary>
